@@ -21,7 +21,19 @@ export default StyleSheet.create({
         height: '100%'
     },
 
-    container: {
+    tableHeader: {
+        marginTop: 3,
+        flexDirection: 'row',
+        backgroundColor: '#F9F9F9',
+        width: metrics.width - 12, 
+        height: 33,
+        borderBottomWidth: 2,
+        borderBottomColor: '#777777',
+        alignItems:'center',
+        alignSelf:'center'
+    },
+
+    tableContainer: {
         flex: 1,
         flexDirection: 'column',
         backgroundColor: '#F9F9F9',
@@ -132,22 +144,32 @@ export default StyleSheet.create({
 
     dateSelectedContainerStyle: {
         alignSelf: 'center',
-        borderColor: "blue",
+        borderColor: "grey",
         borderWidth: 1,
-        borderRadius: 4,
+        borderTopLeftRadius: 4,
+        borderBottomLeftRadius: 4,
+        borderTopRightRadius:1,
+        borderBottomRightRadius:1,
         padding: 8,
         backgroundColor: "blue", 
+        marginLeft: 3,
         elevation: 3,
+        flex: 0.3
     },
 
     dateContainerStyle: {
         alignSelf: 'center',
-        borderColor: "blue",
+        borderColor: "grey",
         borderWidth: 1,
-        borderRadius: 4,
+        borderTopLeftRadius: 4,
+        borderBottomLeftRadius: 4,
+        borderTopRightRadius:1,
+        borderBottomRightRadius:1,
         padding: 8,
+        marginLeft: 3,
         backgroundColor: "white",
         elevation: 3,
+        flex: 0.3
     },
 
     dateSelectedTextStyle: {
@@ -155,6 +177,55 @@ export default StyleSheet.create({
         color: "white",
         width: 100,
         elevation: 3,
+        
+    },
+
+    nameStyle: {
+        textAlign: 'center',
+        color: "black",
+        orderColor: "grey",
+        flex: 0.35,
+        elevation: 3,
+        padding: 8,
+        borderWidth: 1,
+        borderRadius: 1,
+    },
+
+    timeStyle: {
+        textAlign: 'center',
+        color: "black",
+        orderColor: "grey",
+        flex: 0.25,
+        elevation: 3,
+        padding: 8,
+        borderWidth: 1,
+        borderRadius: 3,
+        marginLeft: -2,
+        fontWeight: '800'
+    },
+
+    phoneStyle: {
+        textAlign: 'center',
+        color: "black",
+        orderColor: "grey",
+        flex: 0.35,
+        elevation: 3,
+        padding: 8,
+        borderWidth: 1,
+        borderRadius: 1,
+        marginRight: 3
+    },
+
+    bookStyle: {
+        textAlign: 'center',
+        color: "black",
+        orderColor: "grey",
+        flex: 0.05,
+        elevation: 3,
+        padding: 8,
+        borderWidth: 1,
+        borderRadius: 1,
+        marginRight: 3
     },
 
     dateTextStyle: {
