@@ -154,7 +154,7 @@ export default StyleSheet.create({
 
     dateContainerStyle: {
         alignSelf: 'center',
-        borderColor: "grey",
+        borderColor: "black",
         borderWidth: 1,
         borderTopLeftRadius: 4,
         borderBottomLeftRadius: 4,
@@ -177,7 +177,7 @@ export default StyleSheet.create({
     nameStyle: {
         textAlign: 'center',
         color: "black",
-        orderColor: "grey",
+        borderColor: "black",
         flex: 0.35,
         elevation: 3,
         padding: 8,
@@ -188,7 +188,7 @@ export default StyleSheet.create({
     timeStyle: {
         textAlign: 'center',
         color: "black",
-        orderColor: "grey",
+        borderColor: "black",
         flex: 0.25,
         elevation: 3,
         padding: 8,
@@ -201,7 +201,7 @@ export default StyleSheet.create({
     phoneStyle: {
         textAlign: 'center',
         color: "black",
-        orderColor: "grey",
+        borderColor: "black",
         flex: 0.35,
         elevation: 3,
         padding: 8,
@@ -213,7 +213,7 @@ export default StyleSheet.create({
     bookStyle: {
         textAlign: 'center',
         color: "black",
-        orderColor: "grey",
+        borderColor: "black",
         flex: 0.05,
         elevation: 3,
         padding: 8,

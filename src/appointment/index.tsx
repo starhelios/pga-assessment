@@ -4,7 +4,7 @@ import { Button, Header, IconButton, Modal, ModalConfirm, } from '../components'
 import CustomButton from '../components/customButton';
 import CustomText from '../components/customText';
 import moment from 'moment';
-import styles, { modifiers } from './styles';
+import styles from './styles';
 import BookedView from './bookedView';
 
 const addImage = require('../../assets/check.png');
@@ -53,8 +53,11 @@ const Appointment = () => {
             };
             students.push(student);
         });
+        console.log("students = ", students.length)
+        
         setStudents(students);
     }, []);
+
 
     const onBooked = () => {        
         if(!selectName){
@@ -142,7 +145,6 @@ const Appointment = () => {
             <View style={styles.tableContainer}>
                 <FlatList
                     showsHorizontalScrollIndicator={false}
-                    initialScrollIndex={12}
                     getItemLayout={(data, index) => ({
                         length: 1400,
                         offset: 40 * index,
@@ -241,7 +243,7 @@ const Appointment = () => {
             <ModalConfirm
                 message={"Are you sure want to book this appointment?"}
                 visible={visible}
-                onConfirm={onBooked}
+                onConfirm={()=>onBooked()}
                 onCancel={() => { setVisible(false); }} 
                 onClose={() => {setVisible(false); }}           
             />
@@ -249,8 +251,8 @@ const Appointment = () => {
                 <BookedView 
                     onShow={showBookSessions}
                     onCancel={() => { setShowBookSessions(false); }} 
-                    data={students}
-                    setData={setStudents}
+                    students={students}
+                    setStudents={setStudents}
                 />
             }
             

@@ -9,23 +9,22 @@ import { IconButton, ModalConfirm } from '../components';
 const removeImage = require('../../assets/close.png');
 
 
-const BookedView = ({ onShow, onCancel, data, setData }) => {
- 
+const BookedView = ({ onShow, onCancel, students, setStudents }) => {
     const [selectedHour, setSelectedHour] = useState("");
     const [visible, setVisible] = useState(false);
     const [showBookSessions, setShowBookSessions] = useState(true); 
-    const [selectName, setSelectName] = useState<string>("");
-    const [selectPhone, setSelectPhone] = useState<string>("");
+
+    console.log('students=', JSON.stringify(students))
 
     const onCanceled = () => {
-        data.forEach(student => {
+        students.forEach(student => {
             if(student.time === selectedHour){
                 student.booked = false;
                 student.name = "";
                 student.phone = "";
             }
         });
-        setData(data);
+        setStudents(students);
         setVisible(false);
     }
  
@@ -48,21 +47,24 @@ const BookedView = ({ onShow, onCancel, data, setData }) => {
                     }}
                 />
                 <View style={styles.innerContainerStyle}>
-                    {data.filter(item => item.booked > 0).length ?
+                    {students.filter(item => item.booked).length ?
                     <FlatList
                         showsHorizontalScrollIndicator={false}
-                        initialScrollIndex={12}
+                        initialScrollIndex={15}
                         getItemLayout={(data, index) => ({
                             length: 1400,
                             offset: 40 * index,
                             index,
                         })} 
                         onScrollToIndexFailed={0} 
-                        data={data} 
+                        scrollEnabled={false}
+                        data={students} 
                         horizontal={false} 
                         decelerationRate={'fast'}
                         extraData={selectedHour}
                         renderItem={({ item, index }) => {
+                            console.log("item = ", item.time)
+                            console.log("item = ", item.booked)
                             item = item;
                             return (
                                 !item.booked ?
