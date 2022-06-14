@@ -1,3 +1,5 @@
 node_modules
-android
-ios
+ios/build
+ios/pods
+android/gradle
+android/app/src/debug
