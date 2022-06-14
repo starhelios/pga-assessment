@@ -14,7 +14,6 @@ const BookedView = ({ onShow, onCancel, students, setStudents }) => {
     const [visible, setVisible] = useState(false);
     const [showBookSessions, setShowBookSessions] = useState(true); 
 
-    console.log('students=', JSON.stringify(students))
 
     const onCanceled = () => {
         students.forEach(student => {
@@ -63,8 +62,6 @@ const BookedView = ({ onShow, onCancel, students, setStudents }) => {
                         decelerationRate={'fast'}
                         extraData={selectedHour}
                         renderItem={({ item, index }) => {
-                            console.log("item = ", item.time)
-                            console.log("item = ", item.booked)
                             item = item;
                             return (
                                 !item.booked ?

@@ -53,7 +53,6 @@ const Appointment = () => {
             };
             students.push(student);
         });
-        console.log("students = ", students.length)
         
         setStudents(students);
     }, []);
