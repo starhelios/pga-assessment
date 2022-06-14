@@ -7,6 +7,8 @@ install! 'cocoapods', :deterministic_uuids => false
 target 'PGA_Assesment' do
   config = use_native_modules!
 
+  pod 'RNFastImage', :path => '../node_modules/react-native-fast-image'
+
   # Flags change depending on the env values.
   flags = get_default_flags()
 

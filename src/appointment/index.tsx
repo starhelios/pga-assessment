@@ -1,22 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, View, FlatList, Text, StatusBar, TextInput } from 'react-native';
-import { Header, } from '../components';
+import { ScrollView, View, FlatList, Text, StatusBar, TextInput, Image } from 'react-native';
+import { Button, Header, IconButton, Modal, ModalConfirm, } from '../components';
 import CustomButton from '../components/customButton';
 import CustomText from '../components/customText';
 import moment from 'moment';
 import styles, { modifiers } from './styles';
+import BookedView from './bookedView';
 
+const addImage = require('../../assets/check.png');
 
 export type StudentProps = {
-    name: "";
-    phone: "";
+    time: string;
+    name: string;
+    phone: string;
+    booked: boolean;
 };
 
 const Appointment = () => {
  
-    const [selectedHour, setSelectedHour] = useState(0);
-    const [hours, setHours] = useState([]);
-    const [students, setStudents] = useState([]);
+    const [selectedHour, setSelectedHour] = useState("");
+    const [hours, setHours] = useState<string[]>([]);
+    const [students, setStudents] = useState<StudentProps[]>([]);
+    const [visible, setVisible] = useState(false);
+    const [showBookSessions, setShowBookSessions] = useState(false);
+    const [selectName, setSelectName] = useState<string>("");
+    const [selectPhone, setSelectPhone] = useState<string>("");
+    
 
     useEffect(() => {
         const locale = 'en';  
@@ -32,9 +41,35 @@ const Appointment = () => {
             );
         }
         setHours(hours);
-        console.log(hours)
+        
+        let students: StudentProps[] = [];
+        hours.forEach(time => {
+            let student: StudentProps = {
+                time: time,
+                name: '',
+                phone: '',
+                booked: false
+            };
+            students.push(student);
+        });
+        setStudents(students);
     }, []);
 
+    const onBooked = () => {
+        students.forEach(student => {
+            if(student.time === selectedHour){
+                student.booked = true;
+                student.name = selectName;
+                student.phone = selectPhone;
+            }
+        });
+        setStudents(students)
+        setVisible(false);
+    }
+
+    const showBookedSessions = () => {
+
+    }
  
     return (
         <View style={styles.rootContainer}>
@@ -59,7 +94,7 @@ const Appointment = () => {
                 <Text
                     style={[styles.bookStyle, {borderRadius:3, marginRight:-2, fontWeight: "800"}]}
                 >
-                    {"act"}
+                    {""}
                 </Text>
             </View>
             <View style={styles.tableContainer}>
@@ -72,13 +107,16 @@ const Appointment = () => {
                         index,
                     })} 
                     onScrollToIndexFailed={0} 
-                    data={hours} 
+                    data={students} 
                     horizontal={false} 
                     decelerationRate={'fast'}
                     extraData={selectedHour}
                     renderItem={({ item, index }) => {
                         item = item;
                         return (
+                            item.booked ?
+                            <></>
+                            :
                             <View
                                 style={{
                                     flex:1,
@@ -86,46 +124,94 @@ const Appointment = () => {
                                     alignItems: 'center',
                                     margin: 1,
                                 }}
+                                key={index}
                             >
                                
                                 <CustomButton
                                     buttonStyle={
-                                        selectedHour === item
+                                        selectedHour === item.time
                                             ? styles.dateSelectedContainerStyle
                                             : styles.dateContainerStyle
                                     }
                                     textStyle={
-                                        selectedHour === item
+                                        selectedHour === item.time
                                             ? styles.dateSelectedTextStyle
                                             : styles.dateTextStyle
                                     }
                                     onPress={() => {
-                                        setSelectedHour(item);
+                                        setSelectedHour(item.time);
                                     }}
-                                    text={item}
+                                    text={item.time}
                                 />
                                 <TextInput
-                                    onChangeText={text => setNotes(text)}
-                                    style={styles.nameStyle}
-                                    value={{}}
+                                    onChangeText={text => { if(selectedHour === item.time) setSelectName(text)}}
+                                    style={
+                                        selectedHour !== item.time ? 
+                                            styles.nameStyle 
+                                        :   [styles.nameStyle, {backgroundColor:'blue', color: 'white'}]
+                                    }
+                                    value={selectedHour === item.time ? selectName : ""}
                                     placeholder="input name"
                                     placeholderTextColor="#999999"
+                                    onPressIn={()=>setSelectedHour(item.time)}
                                 />
                                 <TextInput
-                                    onChangeText={text => setNotes(text)}
-                                    style={styles.phoneStyle}
-                                    value={{}}
-                                    placeholder="input phone"
+                                    onChangeText={text => { if(selectedHour === item.time) setSelectPhone(text)}}
+                                    style={
+                                        selectedHour !== item.time ? 
+                                            styles.phoneStyle 
+                                        :   [styles.phoneStyle, {backgroundColor:'blue', color: 'white'}]
+                                    }
+                                    value={selectedHour === item.time ? selectPhone : ""}
+                                    keyboardType={'phone-pad'}
+                                    placeholder="123-456-7890"
                                     placeholderTextColor="#999999"
+                                    onPressIn={()=>setSelectedHour(item.time)}
                                 />
+                                <IconButton
+                                    styles={selectedHour === item.time
+                                        ? {image : {with: 40, Header: 40}, root: styles.bookedStyle}
+                                        : {image : {with: 40, Header: 40}, root: styles.cancelStyle}
+                                    }
+                                    source={addImage}
+                                    onPress={() => {
+                                        setSelectedHour(item.time);
+                                        setVisible(true)
+                                    }} 
+                                />
+                            
+                                
                                 
                             </View>
                         );
                     }}
                     keyExtractor={(_, index) => index.toString()}
                 />
-                 
+                 <Button 
+                    onPress={()=> { setShowBookSessions(true); }}
+                    title="Booked Sessions"
+                    style={{
+                        container: styles.buttonContainer,
+                        title: styles.buttonTitle,
+                    }}
+                />
             </View>
+            <ModalConfirm
+                message={"Are you sure want to book this appointment?"}
+                visible={visible}
+                onConfirm={onBooked}
+                onCancel={() => { setVisible(false); }} 
+                onClose={() => {setVisible(false); }}           
+            />
+            {showBookSessions && 
+                <BookedView 
+                    onShow={showBookSessions}
+                    onCancel={() => { setShowBookSessions(false); }} 
+                    data={students}
+                    setData={setStudents}
+                />
+            }
+            
         </View>
     );
 };

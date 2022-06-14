@@ -10,11 +10,6 @@ var childPadding = parentPadding + childPaddingValue * 2;
 export const AVATAR_SIZE = 111;
 
 export default StyleSheet.create({
-    cancelTextStyle: {
-        textAlign: 'left',
-        color: "black",
-        fontSize: 14,
-    },
 
     rootContainer:{
         width: '100%',
@@ -154,7 +149,7 @@ export default StyleSheet.create({
         backgroundColor: "blue", 
         marginLeft: 3,
         elevation: 3,
-        flex: 0.3
+        flex: 0.25
     },
 
     dateContainerStyle: {
@@ -169,13 +164,12 @@ export default StyleSheet.create({
         marginLeft: 3,
         backgroundColor: "white",
         elevation: 3,
-        flex: 0.3
+        flex: 0.25
     },
 
     dateSelectedTextStyle: {
         textAlign: 'center',
         color: "white",
-        width: 100,
         elevation: 3,
         
     },
@@ -231,20 +225,116 @@ export default StyleSheet.create({
     dateTextStyle: {
         textAlign: 'center',
         color: "black",
-        width: 100,
         elevation: 3,
     },
-});
 
-export const modifiers = {
-    searchBar: {
-        root: {
-            marginTop: 20,
-        },
+    bookedStyle: {
+        alignSelf: 'center',
+        borderColor: "grey",
+        borderWidth: 1,
+        borderTopLeftRadius: 1,
+        borderBottomLeftRadius: 1,
+        borderTopRightRadius: 4,
+        borderBottomRightRadius: 4,
+        padding: 8,
+        backgroundColor: "blue", 
+        marginRight: 3,
+        elevation: 3,
+        flex: 0.05,
+        height: 35
     },
-    container: {
-        safeAreaBottom: {
-            height: 0,
-        }, 
+
+    cancelStyle: {
+        alignSelf: 'center',
+        borderColor: "grey",
+        borderWidth: 1,
+        borderTopLeftRadius: 1,
+        borderBottomLeftRadius: 1,
+        borderTopRightRadius: 4,
+        borderBottomRightRadius: 4,
+        padding: 8,
+        marginRight: 3,
+        backgroundColor: "#00dddd",
+        elevation: 3,
+        flex: 0.05,
+        height: 35
     },
-};
+
+    bookedTextStyle: {
+        textAlign: 'center',
+        color: "white", 
+        elevation: 3,
+        
+    },
+
+    cancelTextStyle: {
+        textAlign: 'center',
+        color: "black",
+        elevation: 3,
+    },
+
+    imageStyle: {
+        width:20,
+        height: 20,
+    },
+
+    buttonContainer: {
+        marginHorizontal: 20,
+        backgroundColor: '#0253E2', 
+        height: 40,
+        justifyContent: 'center',
+        borderRadius: 14,
+    },
+
+    buttonTitle: {
+        color: 'white',
+    },
+
+    parentContainerStyle: {
+        flex: 1,
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        justifyContent: 'center',
+        alignItems: 'center', 
+    },
+
+    innerContainerStyle: {
+        flexDirection: 'row',
+        borderRadius: 5,
+        flexWrap: 'wrap',
+        alignSelf: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingVertical: 15,
+        paddingHorizontal: 10,
+        marginHorizontal: 10,
+        backgroundColor: 'white',
+    },
+
+    textStyle: {
+        color: 'black',
+        textAlign: 'center',
+        fontSize: 18,
+    },
+
+    cancelSelectStateButtonStyle: {
+        marginLeft: metrics.width - 50,
+        marginBottom: 10
+    },
+
+    cancelSelectStateButtonTextStyle: {
+        color: 'white',
+        textAlign: 'center',
+        fontSize: 22,
+    },
+
+    modal: {
+        backgroundColor: 'transparent',
+        top: 0,
+        bottom: 0,
+        margin: 'auto',
+        left: 0,
+        right: 0,
+
+    },
+
+}); 
