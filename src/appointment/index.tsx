@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ScrollView, View, FlatList, Text, StatusBar, TextInput, Image } from 'react-native';
+import { ScrollView, View, FlatList, Text, StatusBar, TextInput, Image, Alert } from 'react-native';
 import { Button, Header, IconButton, Modal, ModalConfirm, } from '../components';
 import CustomButton from '../components/customButton';
 import CustomText from '../components/customText';
@@ -8,6 +8,7 @@ import styles, { modifiers } from './styles';
 import BookedView from './bookedView';
 
 const addImage = require('../../assets/check.png');
+const pattern = new RegExp(/^[0-9\-\b]+$/);
 
 export type StudentProps = {
     time: string;
@@ -55,7 +56,22 @@ const Appointment = () => {
         setStudents(students);
     }, []);
 
-    const onBooked = () => {
+    const onBooked = () => {        
+        if(!selectName){
+            Alert.alert("Alert", "Please input your name.")
+            setVisible(false);
+            return;
+        }
+        if(!selectPhone){
+            Alert.alert("Alert", "Please input your phone number.")
+            setVisible(false);
+            return;
+        } else if(selectPhone.length != 12){
+            Alert.alert("Alert", "Your phone number is not valid.")
+            setVisible(false);
+            return;
+        } 
+
         students.forEach(student => {
             if(student.time === selectedHour){
                 student.booked = true;
@@ -63,12 +79,38 @@ const Appointment = () => {
                 student.phone = selectPhone;
             }
         });
+         
         setStudents(students)
+        setSelectName("");
+        setSelectPhone("");
         setVisible(false);
     }
 
-    const showBookedSessions = () => {
+    const setValidPhoneNumber = (value) =>{ 
+        if (!pattern.test(value)) {  
+            setSelectPhone(value.substr(0, value.length - 1)); 
+            return;
+        } 
 
+        if(value.length > 12){
+            setSelectPhone(value.substr(0, 12)); 
+            return;
+        } 
+
+        if(value.length > 3 && value.substr(3,1) != '-'){
+            value = value.substr(0, 3) + '-' + value.substr(3, value.length);
+        }
+
+        if(value.length > 7 && value.substr(7,1) != '-'){
+            value = value.substr(0, 7) + '-' + value.substr(7, value.length);
+        }
+
+        if((value.length == 3 || value.length == 7) && selectPhone.substr(selectPhone.length - 1, 1) != '-'){
+            value = value + "-";
+        }
+ 
+        setSelectPhone(value); 
+        
     }
  
     return (
@@ -156,7 +198,7 @@ const Appointment = () => {
                                     onPressIn={()=>setSelectedHour(item.time)}
                                 />
                                 <TextInput
-                                    onChangeText={text => { if(selectedHour === item.time) setSelectPhone(text)}}
+                                    onChangeText={text => { if(selectedHour === item.time) setValidPhoneNumber(text)}}
                                     style={
                                         selectedHour !== item.time ? 
                                             styles.phoneStyle 

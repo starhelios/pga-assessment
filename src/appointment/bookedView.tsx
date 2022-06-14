@@ -12,11 +12,8 @@ const removeImage = require('../../assets/close.png');
 const BookedView = ({ onShow, onCancel, data, setData }) => {
  
     const [selectedHour, setSelectedHour] = useState("");
-    const [selectedBookedHour, setSelectedBookedHour] = useState("");
-    const [hours, setHours] = useState<string[]>([]);
     const [visible, setVisible] = useState(false);
-    const [booked, setBooked] = useState(false);
-    const [showBookSessions, setShowBookSessions] = useState(true);
+    const [showBookSessions, setShowBookSessions] = useState(true); 
     const [selectName, setSelectName] = useState<string>("");
     const [selectPhone, setSelectPhone] = useState<string>("");
 
@@ -24,8 +21,8 @@ const BookedView = ({ onShow, onCancel, data, setData }) => {
         data.forEach(student => {
             if(student.time === selectedHour){
                 student.booked = false;
-                student.name = selectName;
-                student.phone = selectPhone;
+                student.name = "";
+                student.phone = "";
             }
         });
         setData(data);
@@ -51,6 +48,7 @@ const BookedView = ({ onShow, onCancel, data, setData }) => {
                     }}
                 />
                 <View style={styles.innerContainerStyle}>
+                    {data.filter(item => item.booked > 0).length ?
                     <FlatList
                         showsHorizontalScrollIndicator={false}
                         initialScrollIndex={12}
@@ -102,7 +100,7 @@ const BookedView = ({ onShow, onCancel, data, setData }) => {
                                                 styles.nameStyle 
                                             :   [styles.nameStyle, {backgroundColor:'blue', color: 'white'}]
                                         }
-                                        value={selectedHour === item.time ? selectName : ""}
+                                        value={item.name}
                                         placeholder="input name"
                                         placeholderTextColor="#999999"
                                         onPressIn={()=>setSelectedHour(item.time)}
@@ -114,7 +112,7 @@ const BookedView = ({ onShow, onCancel, data, setData }) => {
                                                 styles.phoneStyle 
                                             :   [styles.phoneStyle, {backgroundColor:'blue', color: 'white'}]
                                         }
-                                        value={selectedHour === item.time ? selectPhone : ""}
+                                        value={item.phone}
                                         keyboardType={'phone-pad'}
                                         placeholder="123-456-7890"
                                         placeholderTextColor="#999999"
@@ -138,6 +136,8 @@ const BookedView = ({ onShow, onCancel, data, setData }) => {
                         }}
                         keyExtractor={(_, index) => index.toString()}
                     />
+                    :
+                    <Text style={{width: '100%', textAlign: 'center', fontWeight: '600'}}>{'No booked sessions'}</Text>}
                 </View>
             </View>
             <ModalConfirm
